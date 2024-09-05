@@ -14,6 +14,14 @@ class GeneticAlg:
         print("------------------------------------------------")
         self.best_fitness = -float('inf')
 
+    def generate_dna_chain(self, chain_size, sequence_size):
+        return [''.join(np.random.choice(['A', 'C', 'G', 'T'], size=chain_size)) for _ in range(sequence_size)]
+    
+    def print_dna(self, dna):
+        for chain in dna:
+            print(chain)
+        print("------------------------------------------------")
+
     def calculate_hamming_distance(self, chain1, chain2):
         return sum(a != b for a, b in zip(chain1, chain2))
     

@@ -17,7 +17,9 @@ def run_experiments(configurations, num_experiments, population_size, max_iterat
 
         exp_start = datetime.datetime.now()
         for _ in range(num_experiments):
-            dna_chains = [''.join(np.random.choice(['A', 'C', 'G', 'T'], size=m)) for _ in range(n)]
+            dna_chains = model.generate_dna_chain(m,n)
+
+            # model.print_dna(dna_chains)
 
             start_time = datetime.datetime.now()
 
