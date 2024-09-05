@@ -11,6 +11,7 @@ class GeneticAlg:
     def __init__(self):
         print("------------------------------------------------")
         print("Model initialized.")
+        print("------------------------------------------------")
         self.best_fitness = -float('inf')
 
     def calculate_hamming_distance(self, chain1, chain2):
@@ -116,10 +117,6 @@ class GeneticAlg:
         return best_solution
 
     def find_solution(self, selection_method, dna_chains, population_size, max_iterations, mutation_rate): 
-
-        print("------------------------------------------------")
-        print("Searching for solutions...")
-        
         population = self.build_initial_population(dna_chains, population_size)
         best_solution = None
 

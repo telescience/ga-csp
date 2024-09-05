@@ -1,6 +1,6 @@
-from model import *
+from model import methods, GeneticAlg
+import numpy as np
 import datetime
-import time
 
 def run_experiments(configurations, num_experiments, population_size, max_iterations, mutation_rate):
 
@@ -15,13 +15,14 @@ def run_experiments(configurations, num_experiments, population_size, max_iterat
         results = []
         times = []
 
+        exp_start = datetime.datetime.now()
         for _ in range(num_experiments):
             dna_chains = [''.join(np.random.choice(['A', 'C', 'G', 'T'], size=m)) for _ in range(n)]
 
-            start_time = time.time()
+            start_time = datetime.datetime.now()
 
             best_solution = model.find_solution(
-                selection_method=methods["roulette"],
+                selection_method=methods['tournament'],
                 dna_chains=dna_chains,
                 max_iterations=max_iterations,
                 population_size=population_size,
@@ -29,10 +30,12 @@ def run_experiments(configurations, num_experiments, population_size, max_iterat
             )
             best_distance = model.calculate_max_hamming_distance(dna_chains, best_solution)
 
-            end_time = time.time()
+            end_time = datetime.datetime.now()
 
             results.append(best_distance)
-            times.append(end_time - start_time)
+            duration = end_time - start_time
+
+            times.append(duration.total_seconds()/60)
 
         min_val = min(results)
         avg_val = np.mean(results)
@@ -44,10 +47,13 @@ def run_experiments(configurations, num_experiments, population_size, max_iterat
         gaps = [(result - min_val) / min_val * 100 for result in results]
         avg_gap = np.mean(gaps)
 
+        exp_end = datetime.datetime.now()
+        exp_duration = exp_end - exp_start
+        
         newReport = f"{n} {m} {min_val} {avg_val:.1f} {max_val} {std_val:.2f} {avg_time:.2f} {avg_gap:.2f}\n"
         report += newReport
 
-        print(f"Setup: {count}, report: \n{report}")
+        print(f"Setup: {count} expend {exp_duration.total_seconds()/60} minutes, report: \n{report}")
         count+=1
 
 
@@ -78,9 +84,9 @@ def main():
     ]
 
     # GA params
-    population_size = 100
+    population_size = 75
     max_iterations = 50  
-    mutation_rate = 0.3
+    mutation_rate = 0.1
 
     run_experiments(
         configurations=configurations,
