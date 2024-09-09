@@ -9,9 +9,8 @@ methods = {
 
 class GeneticAlg:
     def __init__(self):
-        print("------------------------------------------------")
         print("Model initialized.")
-        print("------------------------------------------------")
+        print("---------------------------------------")
         self.best_fitness = -float('inf')
 
     def generate_dna_chain(self, chain_size, sequence_size):
